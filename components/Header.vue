@@ -6,7 +6,7 @@
         <nav class="navigation">
           <NuxtLink to="/" class="navigation-link">Sākums</NuxtLink>
           <NuxtLink to="/list" class="navigation-link">Pakāpes</NuxtLink>
-          <NuxtLink to="https://www.klustikaravirs.lv/" class="navigation-link" target="_blank" hreflang="lv">Kļūsti karavīrs &#x1F855;</NuxtLink>
+          <NuxtLink to="https://www.klustikaravirs.lv/" class="navigation-link" target="_blank" hreflang="lv">Kļūsti karavīrs &#8599;</NuxtLink>
         </nav>
       </div>
     </div>
@@ -14,7 +14,7 @@
       <nav class="navigation">
         <NuxtLink to="/" class="navigation-link">Sākums</NuxtLink>
         <NuxtLink to="/list" class="navigation-link">Pakāpes</NuxtLink>
-        <NuxtLink to="https://www.klustikaravirs.lv/" class="navigation-link" target="_blank" hreflang="lv">Kļūsti karavīrs &#x1F855;</NuxtLink>
+        <NuxtLink to="https://www.klustikaravirs.lv/" class="navigation-link" target="_blank" hreflang="lv">Kļūsti karavīrs &#8599;</NuxtLink>
       </nav>
     </header>
   </div>
