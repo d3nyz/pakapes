@@ -12,7 +12,7 @@
 <style>
 .page-enter-active,
 .page-leave-active {
-  transition: all 0.4s;
+  transition: all 0.3s ease;
 }
 .page-enter-from,
 .page-leave-to {

@@ -5,6 +5,9 @@ useHead ({
   title: 'NBS dienesta pakāpes - Saraksts'
 })
 
+const ranksListStyle = ref('flex');
+const showHeaders = ref(true);
+
 ranks.value.sort((a, b) => a.sort - b.sort);
 </script>
 
@@ -12,20 +15,16 @@ ranks.value.sort((a, b) => a.sort - b.sort);
   <div class="content-wrapper">
     <h2 class="content-heading">Nacionālo bruņoto spēku dienesta pakāpes</h2>
     <div class="content">
-      <table class="list-table no-margin">
-        <tr>
-          <th>Uzšuve</th>
-          <th>Pakāpe</th>
-          <th>Saīsinājums</th>
-          <th>Kods</th>
-        </tr>
-        <tr v-for="rank in ranks">
-          <td><img :src="'/images/ribbon-' + rank.code.toLowerCase() + '.png'" :alt="rank.code + ' uzšuves attēls'"/></td>
-          <td>{{ rank.name }}</td>
-          <td>{{ rank.short }}</td>
-          <td>{{ rank.code }}</td>
-        </tr>
-      </table>
+      <div class="list-options">
+        <div v-if="ranksListStyle === 'flex'" class="list-options-item">
+          <label class="checkbox">Rādīt virsrakstus
+            <input v-model="showHeaders" type="checkbox"/>
+            <span class="checkmark"></span>
+          </label>
+        </div>
+      </div>
+      <RanksListFlex v-if="ranksListStyle === 'flex'" :ranks="ranks" :showHeaders="showHeaders" />
+      <RanksListTable v-else :ranks="ranks" />
     </div>
   </div>
 </template>
