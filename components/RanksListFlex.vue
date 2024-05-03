@@ -37,7 +37,7 @@ defineProps<{ ranks: any[], showHeaders: boolean }>();
   text-align: center;
   font-size: 1.325rem;
   line-height: 1.375rem;
-  border-bottom: 1px dashed var(--divider-color);
+  border-bottom: .0625rem dashed var(--divider-color);
   background-color: var(--section-background-color);
 }
 .ranks-list-flex .ranks-list-flex-header:first-child {
@@ -50,7 +50,7 @@ defineProps<{ ranks: any[], showHeaders: boolean }>();
   justify-content: space-between;
   align-items: center;
   padding: .5rem;
-  border-bottom: 1px dashed var(--divider-color);
+  border-bottom: .0625rem dashed var(--divider-color);
 }
 .ranks-list-flex-item:last-child {
   border-bottom: unset;

@@ -52,7 +52,7 @@ const ranks = ref<Rank[]> ([
     sort: 11,
     code: 'OR-8',
     name: 'Galvenais virsseržants',
-    short: 'gsrž.',
+    short: 'gvsrž.',
     input: ''
   },
   {

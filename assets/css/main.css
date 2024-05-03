@@ -37,7 +37,7 @@
   font-style: italic;
   src: url('/fonts/PTSans-BoldItalic.ttf') format('truetype');
 }
-* {
+*, *::before, *::after {
   box-sizing: border-box;
 }
 html {
@@ -52,6 +52,7 @@ body {
 }
 a {
   color: var(--color-teal-blue);
+  transition: color .3s ease-in-out;
 }
 a:hover {
   color: var(--color-gunmetal);
@@ -69,6 +70,9 @@ input[type="text"] {
   padding: .3rem 1rem;
   outline: none;
   transition: border-color .3s ease-in-out;
+}
+input[type="text"]:hover {
+  border-color: var(--color-silver);
 }
 input[type="text"]:focus {
   border-color: var(--color-gray-1);
@@ -101,11 +105,11 @@ input[type="text"].error {
   min-height: 2rem;
   background-color: var(--body-background-color);
   box-sizing: border-box;
-  box-shadow: 0 0 4px 2px var(--body-background-color);
+  box-shadow: 0 0 .25rem .125rem var(--body-background-color);
   transition: box-shadow .3s ease-in-out;
 }
 .header.header-scrolled {
-  box-shadow: 0 0 4px 2px rgba(0,0,0,0.1);
+  box-shadow: 0 0 .25rem .125rem rgba(0,0,0,0.1);
 }
 .navigation {
   display: flex;
@@ -127,7 +131,7 @@ input[type="text"].error {
 }
 /* Content */
 .content-wrapper {
-  max-width: 720px;
+  max-width: 56rem;
   margin: 2rem 1rem;
   display: flex;
   flex-direction: column;
@@ -214,11 +218,11 @@ input[type="text"].error {
   margin: 0 auto 1rem;
 }
 .list-table th {
-  border-bottom: 1px dashed var(--divider-color);
+  border-bottom: .0625rem dashed var(--divider-color);
 }
 .list-table th, .list-table td {
   padding: .25rem 1rem;
-  border-right: 1px dashed var(--divider-color);
+  border-right: .0625rem dashed var(--divider-color);
 }
 .list-table th:last-child, .list-table td:last-child {
   border-right: none;
@@ -233,15 +237,81 @@ input[type="text"].error {
   color: var(--color-red);
 }
 /* List options */
-.list-options {
+.options-wrapper {
   position: relative;
-  display: flex;
+  display: block;
+}
+@media screen and (min-width: 38em) {
+  .options-wrapper {
+    margin-top: -0.5rem;
+  }
+}
+.options-toggle {
+  position: absolute;
+  top: -0.55rem;
+  right: 1rem;
+  z-index: 2;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 0 .5rem;
+  color: var(--primary-color);
+  background-color: var(--content-background-color);
+  border: .0625rem dashed var(--primary-color);
+  border-radius: .5rem;
+  transition: all .3s ease-in-out;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.options-toggle:hover {
+  color: var(--primary-color-shade);
+  border-color: var(--primary-color-shade);
+}
+.options-toggle span {
+  display: inline-block;
+  transform: rotate(180deg);
+  transition: transform .3s ease-in-out;
+  margin-right: .25rem;
+}
+.options-toggle.options-toggle-closed span {
+  transform: rotate(90deg);
+}
+.options-container {
+  position: relative;
+  display: grid;
   flex-direction: row;
   flex-wrap: wrap;
   margin-bottom: 1rem;
+  padding: 1rem;
   background-color: var(--content-background-color);
-  box-shadow: 0 0 4px 2px var(--content-background-color);
+  border: .0625rem dashed var(--divider-color);
+  border-radius: 1rem;
+  box-shadow: 0 0 .25rem .125rem var(--content-background-color);
   z-index: 1;
+  grid-template-rows: 1fr;
+  transition: all .3s ease-in-out;
+}
+@media screen and (min-width: 38em) {
+  .options-wrapper {
+    margin-bottom: 1.4rem;
+  }
+}
+.options-container > div {
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.options-container.options-container-hidden {
+  grid-template-rows: 0fr;
+  padding: 0;
+  border-color: var(--color-light-gray);
+}
+.options-container > div .options-container-item > * {
+  margin-top: .5rem;
 }
 /* Custom checkbox */
 .checkbox {
@@ -293,10 +363,102 @@ input[type="text"].error {
 .checkbox input:checked ~ .checkmark:after {
   opacity: 1;
 }
+/* Select */
+.select-container {
+  position: relative;
+}
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  position: relative;
+  font-family: 'PT Sans', sans-serif;
+  font-size: 1rem;
+  line-height: 1.1;
+  width: 100%;
+  margin: 0;
+  padding: .25rem 1.5rem .25rem .5rem;
+  background-color: var(--content-background-color);
+  color: var(--content-text-color);
+  border: .25rem solid var(--color-light-gray);
+  border-radius: 1rem;
+  cursor: pointer;
+  outline: none;
+  transition: border-color .3s ease-in-out;
+}
+select::-ms-expand {
+  display: none; /* Remove default arrow in IE 10/11 */
+}
+select:hover {
+  border-color: var(--color-silver);
+}
+select:focus {
+  border-color: var(--color-gray-1);
+}
+.select-container::after {
+  content: "▲";
+  transform: rotate(180deg);
+  position: absolute;
+  top: .3rem;
+  right: .5rem;
+  color: var(--color-light-gray);
+  font-size: 1rem;
+  pointer-events: none;
+  transition: color .3s ease-in-out;
+}
+.select-container:has(select:hover)::after {
+  color: var(--color-silver);
+}
+.select-container:has(select:focus)::after {
+  color: var(--color-gray-1);
+}
+.select-container:has(select:active)::after {
+  color: var(--primary-color);
+}
+.select-container select {
+  min-width: 8rem;
+}
+.select-container:has(select:disabled) {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: .5;
+}
+.select-container:has(.select-container-label) {
+  margin-top: .5rem;
+}
+.select-container .select-container-label {
+  position: absolute;
+  top: -0.5rem;
+  left: 1rem;
+  padding: 0 .5rem;
+  z-index: 1;
+  font-size: .75rem;
+  background-color: var(--content-background-color);
+  color: var(--content-text-color);
+  border: .125rem solid var(--color-light-gray);
+  border-radius: 1rem;
+  pointer-events: none;
+  transition: border-color .3s ease-in-out;
+}
+.select-container:has(select:hover) .select-container-label {
+  border-color: var(--color-silver);
+}
+.select-container:has(select:focus) .select-container-label {
+  border-color: var(--color-gray-1);
+}
+.select-container:has(.select-container-label) select {
+  min-width: 10rem;
+  padding: .75rem 2rem .5rem 1rem;
+  border-radius: 2rem;
+}
+.select-container:has(.select-container-label)::after {
+  top: .75rem;
+  right: .75rem;
+}
 /* Footer */
 .footer {
   color: var(--content-text-color);
-  border-top: 1px dashed var(--divider-color);
+  border-top: .0625rem dashed var(--divider-color);
   font-size: 1rem;
   margin-top: 1rem;
   text-align: center;
@@ -304,5 +466,5 @@ input[type="text"].error {
   margin: auto 1rem;
 }
 .footer a {
-  text-underline-offset: 2px;
+  text-underline-offset: 0.125rem;
 }
