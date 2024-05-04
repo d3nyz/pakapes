@@ -1,25 +1,25 @@
 <script setup lang="ts">
 
-defineProps<{ ranks: any[], showHeaders: boolean }>();
+defineProps<{ ranks: any[], ranksType: string, showHeaders: boolean }>();
 
 </script>
 
 <template>
   <TransitionGroup name="list" tag="div" class="ranks-list-flex">
     <h3 v-if="showHeaders" class="ranks-list-flex-header" key="header-flag-officers">Augstākie virsnieki</h3>
-    <RanksListFlexItem v-for="rank in [ranks[0], ranks[1], ranks[2]]" :key="rank.sort" :rank="rank" />
+    <RanksListFlexItem v-for="rank in [ranks[0], ranks[1], ranks[2]]" :key="rank.sort" :rank="rank" :rankType="ranksType" />
     <h3 v-if="showHeaders" class="ranks-list-flex-header" key="header-senior-officers">Vecākie virsnieki</h3>
-    <RanksListFlexItem v-for="rank in [ranks[3], ranks[4], ranks[5]]" :key="rank.sort" :rank="rank" />
+    <RanksListFlexItem v-for="rank in [ranks[3], ranks[4], ranks[5]]" :key="rank.sort" :rank="rank" :rankType="ranksType" />
     <h3 v-if="showHeaders" class="ranks-list-flex-header" key="header-junior-officers">Jaunākie virsnieki</h3>
-    <RanksListFlexItem v-for="rank in [ranks[6], ranks[7], ranks[8]]" :key="rank.sort" :rank="rank" />
+    <RanksListFlexItem v-for="rank in [ranks[6], ranks[7], ranks[8]]" :key="rank.sort" :rank="rank" :rankType="ranksType" />
     <h3 v-if="showHeaders" class="ranks-list-flex-header" key="header-general-petty-officers">Augstākie instruktori</h3>
-    <RanksListFlexItem v-for="rank in [ranks[9], ranks[10]]" :key="rank.sort" :rank="rank" />
+    <RanksListFlexItem v-for="rank in [ranks[9], ranks[10]]" :key="rank.sort" :rank="rank" :rankType="ranksType" />
     <h3 v-if="showHeaders" class="ranks-list-flex-header" key="header-senior-petty-officers">Vecākie instruktori</h3>
-    <RanksListFlexItem v-for="rank in [ranks[11], ranks[12]]" :key="rank.sort" :rank="rank" />
+    <RanksListFlexItem v-for="rank in [ranks[11], ranks[12]]" :key="rank.sort" :rank="rank" :rankType="ranksType" />
     <h3 v-if="showHeaders" class="ranks-list-flex-header" key="header-junior-petty-officers">Jaunakie instruktori</h3>
-    <RanksListFlexItem v-for="rank in [ranks[13], ranks[14]]" :key="rank.sort" :rank="rank" />
+    <RanksListFlexItem v-for="rank in [ranks[13], ranks[14]]" :key="rank.sort" :rank="rank" :rankType="ranksType" />
     <h3 v-if="showHeaders" class="ranks-list-flex-header" key="header-privates">Kareivji</h3>
-    <RanksListFlexItem v-for="rank in [ranks[15], ranks[16]]" :key="rank.sort" :rank="rank" />
+    <RanksListFlexItem v-for="rank in [ranks[15], ranks[16]]" :key="rank.sort" :rank="rank" :rankType="ranksType" />
   </TransitionGroup>
 </template>
 
@@ -59,6 +59,7 @@ defineProps<{ ranks: any[], showHeaders: boolean }>();
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 7.2rem;
 }
 .ranks-list-flex-item-text {
   display: flex;

@@ -1,5 +1,15 @@
 <script setup lang="ts">
-defineProps<{ ranks: any[] }>()
+import { computed } from 'vue';
+
+const props = defineProps<{ ranks: any, ranksType: string }>();
+
+const imagePath = computed(() => {
+  if (props.ranksType === 'navy') {
+    return '/images/navy/ribbon-'
+  } else {
+    return '/images/ribbon-'
+  }
+})
 </script>
 
 <template>
@@ -11,7 +21,7 @@ defineProps<{ ranks: any[] }>()
       <th>Kods</th>
     </tr>
     <tr v-for="rank in ranks">
-      <td><img :src="'/images/ribbon-' + rank.code.toLowerCase() + '.png'" :alt="rank.code + ' uzšuves attēls'"/></td>
+      <td><img :src="imagePath + rank.code.toLowerCase() + '.png'" :alt="rank.code + ' uzšuves attēls'"/></td>
       <td>{{ rank.name }}</td>
       <td>{{ rank.short }}</td>
       <td>{{ rank.code }}</td>
