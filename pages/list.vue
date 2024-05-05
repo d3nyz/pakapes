@@ -31,7 +31,14 @@ const currentRanks = computed(() => {
     <h2 class="content-heading">Nacionālo bruņoto spēku dienesta pakāpes</h2>
     <div class="content">
       <div class="options-wrapper">
-        <label @click="showOptions = !showOptions" class="options-toggle" :class="{ 'options-toggle-closed': !showOptions }"><span>▲</span>Attēlošanas opcijas</label>
+        <label 
+          @click="showOptions = !showOptions" 
+          @keyup.enter="showOptions = !showOptions" 
+          class="options-toggle" 
+          :class="{ 'options-toggle-closed': !showOptions } " 
+          tabindex="0">
+          <span>▲</span>Attēlošanas opcijas
+        </label>
         <div class="options-container" :class="{ 'options-container-hidden': !showOptions }">
           <div>
             <div class="options-container-item">
@@ -54,7 +61,7 @@ const currentRanks = computed(() => {
             </div>
             <div v-if="ranksListStyle === 'flex'" class="options-container-item">
               <label class="checkbox">Rādīt virsrakstus
-                <input v-model="showHeaders" type="checkbox"/>
+                <input v-model="showHeaders" type="checkbox" @keyup.enter="showHeaders = !showHeaders"/>
                 <span class="checkmark"></span>
               </label>
             </div>

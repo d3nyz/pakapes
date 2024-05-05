@@ -20,11 +20,21 @@ function startTest() {
   currentQuestionIndex.value = 0;
   state.value = 'question'
 }
+function removeErrorClass() {
+  const answerInput = document.getElementById('answer-input');
+  answerInput?.classList.remove('error');
+}
 function showNext() {
-  if (currentQuestionIndex.value < ranks.value.length - 1) {
-    currentQuestionIndex.value++;
+  if (ranks.value[currentQuestionIndex.value].input !== '') {
+    if (currentQuestionIndex.value < ranks.value.length - 1) {
+      currentQuestionIndex.value++;
+    } else {
+      showResult();
+    }
   } else {
-    showResult();
+    const answerInput = document.getElementById('answer-input');
+    answerInput?.classList.add('error');
+    answerInput?.focus();
   }
 }
 function showResult() {
@@ -41,7 +51,18 @@ function showResult() {
         <div class="question"> 
           <p class="question-text">Kas šī ir par pakāpi?</p>
           <p class="question-text"><img :src="'/images/ribbon-' + ranks[currentQuestionIndex].code.toLowerCase() + '.png'" :alt="ranks[currentQuestionIndex].code + ' uzšuves attēls'"/></p>
-          <input class="answer-input" type="text" v-model.trim="ranks[currentQuestionIndex].input" focusable @keypress="e => e.key === 'Enter' && showNext()"/>
+          <input 
+            v-model.trim="ranks[currentQuestionIndex].input"   
+            id="answer-input" 
+            class="answer-input" 
+            type="text" 
+            focusable
+            minlength="1"
+            maxlength="25"
+            pattern="[a-zA-ZāĀčČēĒģĢīĪķĶļĻņŅšŠūŪžŽ ]*"
+            @keyup.enter="showNext()"
+            @input="removeErrorClass"
+          />
           <input v-if="unansweredRanksCount > 0" class="button" type="button" value="Nākamais" accesskey="enter" @click="showNext()" />
           <input v-else class="button" type="button" value="Rezultāts" accesskey="enter" @click="showResult()" />
         </div>

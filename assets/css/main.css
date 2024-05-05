@@ -69,6 +69,7 @@ input[type="text"] {
   background-color: var(--content-background-color);
   padding: .3rem 1rem;
   outline: none;
+  will-change: border-color;
   transition: border-color .3s ease-in-out;
 }
 input[type="text"]:hover {
@@ -79,6 +80,10 @@ input[type="text"]:focus {
 }
 input[type="text"].error {
   border-color: var(--primary-color);
+  animation: shake .3s ease-in-out;
+}
+input[type="text"]:invalid {
+  animation: shake .3s ease-in-out;
 }
 .no-margin {
   margin: 0 !important;
@@ -106,6 +111,7 @@ input[type="text"].error {
   background-color: var(--body-background-color);
   box-sizing: border-box;
   box-shadow: 0 0 .25rem .125rem var(--body-background-color);
+  will-change: box-shadow;
   transition: box-shadow .3s ease-in-out;
 }
 .header.header-scrolled {
@@ -120,14 +126,42 @@ input[type="text"].error {
   box-sizing: border-box;
 }
 .navigation-link {
-  padding: .5rem 1rem;
+  padding: 0 .5rem;
+  margin: .25rem .5rem;
   color: var(--content-text-color);
   text-decoration: none;
   font-size: 1.375rem;
-  transition: all .3s ease-in-out;
+  line-height: 1.5;
+  position: relative;
+  display: inline-block;
+  border: .125rem solid transparent;
+  border-radius: 1rem;
+  will-change: border-color, background-color;
+  transition: border-color .3s ease, background-color .3s ease;
 }
-.navigation-link:hover {
-  text-decoration: underline;
+.navigation-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: .125rem;
+  background-color: var(--primary-color);
+  will-change: width, left;
+  transition: width .3s ease, left .3s ease;
+}
+.navigation-link:hover::after {
+  width: 100%;
+  left: 0;
+}
+.navigation-link:focus-visible:hover::after {
+  width: 80%;
+  left: 10%;
+}
+.navigation-link:focus-visible {
+  outline: none;
+  background-color: var(--content-background-color);
+  border: .125rem solid var(--color-gunmetal);
 }
 /* Content */
 .content-wrapper {
@@ -141,7 +175,6 @@ input[type="text"].error {
   color: var(--content-text-color);
   border-radius: 2rem;
   overflow: hidden;
-  transition: all .3s ease-in-out;
 }
 @media screen and (max-width: 18em) {
   .content-wrapper {
@@ -190,7 +223,8 @@ input[type="text"].error {
   font-family: 'PT Sans', sans-serif;
   font-size: 1.375rem;
   font-weight: 600;
-  transition: all .3s ease-in-out;
+  will-change: background-color, border-color;
+  transition: background-color .3s ease-in-out, border-color .3s ease-in-out;
 }
 .button:hover {
   background-color: var(--primary-color-shade);
@@ -201,6 +235,11 @@ input[type="text"].error {
   outline: none;
   border-color: var(--color-gray-1);
   background-color: var(--primary-color-shade);
+}
+.button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 /* Question block */
 .question {
@@ -259,7 +298,8 @@ input[type="text"].error {
   background-color: var(--content-background-color);
   border: .0625rem dashed var(--primary-color);
   border-radius: .5rem;
-  transition: all .3s ease-in-out;
+  will-change: color, border-color;
+  transition: color .3s ease-in-out, border-color .3s ease-in-out;
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
@@ -268,9 +308,16 @@ input[type="text"].error {
   color: var(--primary-color-shade);
   border-color: var(--primary-color-shade);
 }
+.options-toggle:focus-visible {
+  outline: .0625rem solid var(--color-gunmetal);
+  border-style: solid;
+  border-color: var(--color-gunmetal);
+  color: var(--primary-color-shade);
+}
 .options-toggle span {
   display: inline-block;
   transform: rotate(180deg);
+  will-change: transform;
   transition: transform .3s ease-in-out;
   margin-right: .25rem;
 }
@@ -290,7 +337,8 @@ input[type="text"].error {
   box-shadow: 0 0 .25rem .125rem var(--content-background-color);
   z-index: 1;
   grid-template-rows: 1fr;
-  transition: all .3s ease-in-out;
+  will-change: grid-template-rows, padding, border-color;
+  transition: grid-template-rows .3s ease-in-out, padding .3s ease-in-out, border-color .3s ease-in-out;
 }
 @media screen and (min-width: 38em) {
   .options-wrapper {
@@ -319,13 +367,21 @@ input[type="text"].error {
   width: fit-content;
   position: relative;
   cursor: pointer;
-  padding-left: 2rem;
+  padding: .25rem .5rem .25rem 2rem;
   line-height: 1.5;
   font-size: 1rem;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  border: .125rem solid transparent;
+  border-radius: 1rem;
+  will-change: border-color;
+  transition: border-color .3s ease-in-out;
+}
+.checkbox:has(input[type="checkbox"]:focus-visible) {
+  border-color: var(--color-gunmetal);
+  outline: none;
 }
 .checkbox input[type="checkbox"] {
   position: absolute;
@@ -336,14 +392,15 @@ input[type="text"].error {
 }
 .checkmark {
   position: absolute;
-  top: .15rem;
-  left: .25rem;
+  top: .4rem;
+  left: .45rem;
   height: 1.25rem;
   width: 1.25rem;
   background-color: var(--content-background-color);
   border: .25rem solid var(--color-light-gray);
   border-radius: 50%;
-  transition: all .3s ease-in-out;
+  will-change: border-color;
+  transition: border-color .3s ease-in-out;
 }
 .checkbox:hover input ~ .checkmark {
   border-color: var(--color-silver); 
@@ -358,7 +415,8 @@ input[type="text"].error {
   line-height: 1;
   font-weight: bold;
   color: var(--color-gunmetal);
-  transition: all .3s ease-in-out;
+  will-change: opacity;
+  transition: opacity .3s ease-in-out;
 }
 .checkbox input:checked ~ .checkmark:after {
   opacity: 1;
@@ -384,6 +442,7 @@ select {
   border-radius: 1rem;
   cursor: pointer;
   outline: none;
+  will-change: border-color;
   transition: border-color .3s ease-in-out;
 }
 select::-ms-expand {
@@ -396,14 +455,14 @@ select:focus {
   border-color: var(--color-gray-1);
 }
 .select-container::after {
-  content: "▲";
-  transform: rotate(180deg);
+  content: "▼";
   position: absolute;
   top: .3rem;
   right: .5rem;
   color: var(--color-light-gray);
   font-size: 1rem;
   pointer-events: none;
+  will-change: color;
   transition: color .3s ease-in-out;
 }
 .select-container:has(select:hover)::after {
@@ -438,6 +497,7 @@ select:focus {
   border: .125rem solid var(--color-light-gray);
   border-radius: 1rem;
   pointer-events: none;
+  will-change: border-color;
   transition: border-color .3s ease-in-out;
 }
 .select-container:has(select:hover) .select-container-label {
@@ -467,4 +527,16 @@ select:focus {
 }
 .footer a {
   text-underline-offset: 0.125rem;
+}
+/* Animation */
+@keyframes shake {
+  25% {
+      transform: translate(4px);
+  }
+  50% {
+      transform: translate(-4px);
+  }
+  75% {
+      transform: translate(4px);
+  }
 }

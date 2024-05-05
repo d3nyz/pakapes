@@ -26,7 +26,7 @@ export default defineNuxtConfig({
       name: 'NBS dienesta pakāpes',
       short_name: 'NBS dienesta pakāpes',
       description: 'Mērķis ir palīdzēt nacionālo bruņoto spēku kandidātam iemācīties atšķirt Latvijas armijas dienesta pakāpes.',
-      theme_color: '#9e3039',
+      theme_color: '#f5f5f5',
       background_color: '#f5f5f5',
       icons: [
         {
