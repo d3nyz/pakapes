@@ -18,12 +18,11 @@ const imagePath = computed(() => {
 </script>
 
 <template>
-  <table class="list-table no-margin">
+  <table class="list-table">
     <tr>
       <th>Uzšuve</th>
       <th>Pakāpe</th>
-      <th>Saīsinājums</th>
-      <th>Kods</th>
+      <th>Atbilde</th>
     </tr>
     <tr v-for="rank in ranks">
       <td>
@@ -33,8 +32,18 @@ const imagePath = computed(() => {
         />
       </td>
       <td>{{ rank.name }}</td>
-      <td>{{ rank.short }}</td>
-      <td>{{ rank.code }}</td>
+      <td>
+        {{ rank.input }} 
+        <label 
+          v-if="rank.input && rank.input.toLowerCase() === rank.name.toLowerCase()" 
+          class="result-correct">
+          &check;
+        </label>
+        <label 
+          v-else class="result-incorrect">
+          &cross;
+        </label>
+      </td>
     </tr>
   </table>
 </template>

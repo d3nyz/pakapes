@@ -1,24 +1,26 @@
 <script setup lang="ts">
+import type { Rank } from "~/assets/types/rank";
+import type { RanksOptions } from '~/assets/types/ranksOptions';
 
-defineProps<{ ranks: any[], ranksType: string, showHeaders: boolean }>();
+defineProps<{ ranks: Rank[], ranksType: RanksOptions['type'], showHeaders: RanksOptions['showHeaders'] }>();
 
 </script>
 
 <template>
   <TransitionGroup name="list" tag="div" class="ranks-list-flex">
-    <h3 v-if="showHeaders" class="ranks-list-flex-header" key="header-flag-officers">Augstākie virsnieki</h3>
+    <h3 :class="{ 'ranks-list-flex-header-hidden': !showHeaders }" class="ranks-list-flex-header" key="header-flag-officers"><div>Augstākie virsnieki</div></h3>
     <RanksListFlexItem v-for="rank in [ranks[0], ranks[1], ranks[2]]" :key="rank.sort" :rank="rank" :rankType="ranksType" />
-    <h3 v-if="showHeaders" class="ranks-list-flex-header" key="header-senior-officers">Vecākie virsnieki</h3>
+    <h3 :class="{ 'ranks-list-flex-header-hidden': !showHeaders }" class="ranks-list-flex-header" key="header-senior-officers"><div>Vecākie virsnieki</div></h3>
     <RanksListFlexItem v-for="rank in [ranks[3], ranks[4], ranks[5]]" :key="rank.sort" :rank="rank" :rankType="ranksType" />
-    <h3 v-if="showHeaders" class="ranks-list-flex-header" key="header-junior-officers">Jaunākie virsnieki</h3>
+    <h3 :class="{ 'ranks-list-flex-header-hidden': !showHeaders }" class="ranks-list-flex-header" key="header-junior-officers"><div>Jaunākie virsnieki</div></h3>
     <RanksListFlexItem v-for="rank in [ranks[6], ranks[7], ranks[8]]" :key="rank.sort" :rank="rank" :rankType="ranksType" />
-    <h3 v-if="showHeaders" class="ranks-list-flex-header" key="header-general-petty-officers">Augstākie instruktori</h3>
+    <h3 :class="{ 'ranks-list-flex-header-hidden': !showHeaders }" class="ranks-list-flex-header" key="header-general-petty-officers"><div>Augstākie instruktori</div></h3>
     <RanksListFlexItem v-for="rank in [ranks[9], ranks[10]]" :key="rank.sort" :rank="rank" :rankType="ranksType" />
-    <h3 v-if="showHeaders" class="ranks-list-flex-header" key="header-senior-petty-officers">Vecākie instruktori</h3>
+    <h3 :class="{ 'ranks-list-flex-header-hidden': !showHeaders }" class="ranks-list-flex-header" key="header-senior-petty-officers"><div>Vecākie instruktori</div></h3>
     <RanksListFlexItem v-for="rank in [ranks[11], ranks[12]]" :key="rank.sort" :rank="rank" :rankType="ranksType" />
-    <h3 v-if="showHeaders" class="ranks-list-flex-header" key="header-junior-petty-officers">Jaunakie instruktori</h3>
+    <h3 :class="{ 'ranks-list-flex-header-hidden': !showHeaders }" class="ranks-list-flex-header" key="header-junior-petty-officers"><div>Jaunakie instruktori</div></h3>
     <RanksListFlexItem v-for="rank in [ranks[13], ranks[14]]" :key="rank.sort" :rank="rank" :rankType="ranksType" />
-    <h3 v-if="showHeaders" class="ranks-list-flex-header" key="header-privates">Kareivji</h3>
+    <h3 :class="{ 'ranks-list-flex-header-hidden': !showHeaders }" class="ranks-list-flex-header" key="header-privates"><div>Kareivji</div></h3>
     <RanksListFlexItem v-for="rank in [ranks[15], ranks[16]]" :key="rank.sort" :rank="rank" :rankType="ranksType" />
   </TransitionGroup>
 </template>
@@ -30,7 +32,7 @@ defineProps<{ ranks: any[], ranksType: string, showHeaders: boolean }>();
   flex-direction: column;
 }
 .ranks-list-flex-header {
-  display: block;
+  display: grid;
   width: 100%;
   padding: .5rem;
   margin: 0; 
@@ -39,6 +41,16 @@ defineProps<{ ranks: any[], ranksType: string, showHeaders: boolean }>();
   line-height: 1.375rem;
   border-bottom: .0625rem dashed var(--divider-color);
   background-color: var(--section-background-color);
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.3s ease, padding 0.3s ease, border-bottom 0.3s ease;
+}
+.ranks-list-flex-header > div {
+  overflow: hidden;
+}
+.ranks-list-flex-header.ranks-list-flex-header-hidden {
+  grid-template-rows: 0fr;
+  padding: 0;
+  border-bottom: 0;
 }
 .ranks-list-flex .ranks-list-flex-header:first-child {
   border-top-left-radius: 1rem;

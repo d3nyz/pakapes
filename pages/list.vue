@@ -1,29 +1,31 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-import { ranks } from '~/data/Ranks';
-import { ranksNavy } from '~/data/RanksNavy';
+import ranks from '~/data/Ranks';
+import ranksNavy from '~/data/RanksNavy';
+
+import type { Rank } from '~/assets/types/rank';
+import type { RanksOptions } from '~/assets/types/ranksOptions';
 
 useHead ({
   title: 'NBS dienesta pakāpes - Saraksts'
 })
 
-const ranksType = ref('general');
-const ranksListStyle = ref('flex');
-const showHeaders = ref(true);
-const showOptions = ref(true);
+const ranksType: Ref<RanksOptions['type']> = ref('general');
+const ranksListStyle: Ref<RanksOptions['listStyle']> = ref('flex');
+const showHeaders: Ref<RanksOptions['showHeaders']> = ref(true);
+const showOptions: Ref<boolean> = ref(true);
 
-const currentRanks = computed(() => {
+const currentRanks: Ref<Rank[]> = computed(() => {
   let ranksToReturn = [];
   if (ranksType.value === 'navy') {
-    ranksToReturn = ranksNavy.value;
+    ranksToReturn = ranksNavy.ranksNavy;
   } else {
-    ranksToReturn = ranks.value;
+    ranksToReturn = ranks.ranks;
   }
   ranksToReturn.sort((a, b) => a.sort - b.sort);
   return ranksToReturn;
 })
-
 </script>
 
 <template>
@@ -37,7 +39,7 @@ const currentRanks = computed(() => {
           class="options-toggle" 
           :class="{ 'options-toggle-closed': !showOptions } " 
           tabindex="0">
-          <span>▲</span>Attēlošanas opcijas
+          <span>▼</span>Attēlošanas opcijas
         </label>
         <div class="options-container" :class="{ 'options-container-hidden': !showOptions }">
           <div>
@@ -68,21 +70,17 @@ const currentRanks = computed(() => {
           </div>
         </div>
       </div>
-      <RanksListFlex v-if="ranksListStyle === 'flex'" :ranks="currentRanks" :ranksType="ranksType" :showHeaders="showHeaders" />
-      <RanksListTable v-else :ranks="currentRanks" :ranksType="ranksType" />
+      <RanksListFlex 
+        v-if="ranksListStyle === 'flex'" 
+        :ranks="currentRanks" 
+        :ranksType="ranksType" 
+        :showHeaders="showHeaders" 
+      />
+      <RanksListTable 
+        v-else 
+        :ranks="currentRanks" 
+        :ranksType="ranksType" 
+      />
     </div>
   </div>
 </template>
-
-<style>
-.expand-enter-active,
-.expand-leave-active {
-  transition: height 1s ease-in-out;
-  overflow: hidden;
-}
-
-.expand-enter,
-.expand-leave-to {
-  height: 0;
-}
-</style>

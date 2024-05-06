@@ -1,3 +1,22 @@
+<script setup lang="ts">
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+
+const isScrolled: Ref<boolean> = ref(false);
+
+const handleScroll = () => {
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  isScrolled.value = scrollTop > 0;
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
+</script>
+
 <template>
   <div>
     <!-- Temporary solution to push content down by header size (to fix header over content on mobile) -->
@@ -19,26 +38,6 @@
     </header>
   </div>
 </template>
-
-<script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
-
-const isScrolled = ref(false);
-
-const handleScroll = () => {
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  isScrolled.value = scrollTop > 0;
-};
-
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener('scroll', handleScroll);
-});
-
-</script>
 
 <style scoped>
 .header-placeholder > .header {

@@ -1,11 +1,11 @@
 <template>
   <NuxtPwaManifest />
   <div class="flex-wrapper">
-    <Header />
+    <AppHeader v-once />
     <div class="main">  
       <NuxtPage />
     </div>
-    <Footer />
+    <AppFooter v-once />
   </div>
 </template>
 

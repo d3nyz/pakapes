@@ -316,19 +316,16 @@ input[type="text"]:invalid {
 }
 .options-toggle span {
   display: inline-block;
-  transform: rotate(180deg);
   will-change: transform;
   transition: transform .3s ease-in-out;
   margin-right: .25rem;
 }
 .options-toggle.options-toggle-closed span {
-  transform: rotate(90deg);
+  transform: rotate(-90deg);
 }
 .options-container {
   position: relative;
   display: grid;
-  flex-direction: row;
-  flex-wrap: wrap;
   margin-bottom: 1rem;
   padding: 1rem;
   background-color: var(--content-background-color);
@@ -360,6 +357,13 @@ input[type="text"]:invalid {
 }
 .options-container > div .options-container-item > * {
   margin-top: .5rem;
+}
+/* Test options */
+.test-options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0 1rem;
 }
 /* Custom checkbox */
 .checkbox {
