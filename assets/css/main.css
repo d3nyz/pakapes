@@ -107,15 +107,22 @@ input[type="text"]:invalid {
   top: 0;
   z-index: 10;
   width: 100%;
-  min-height: 2rem;
   background-color: var(--body-background-color);
   box-sizing: border-box;
   box-shadow: 0 0 .25rem .125rem var(--body-background-color);
-  will-change: box-shadow;
-  transition: box-shadow .3s ease-in-out;
+  display: grid;
+  grid-template-rows: 1fr;
+  will-change: box-shadow, grid-template-rows;
+  transition: box-shadow .3s ease, grid-template-rows .3s ease;
+}
+.header > div {
+  overflow: hidden;
 }
 .header.header-scrolled {
   box-shadow: 0 0 .25rem .125rem rgba(0,0,0,0.1);
+}
+.header.header-scrolled.header-scrolled-down {
+  grid-template-rows: 0fr;
 }
 .navigation {
   display: flex;
