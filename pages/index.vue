@@ -19,9 +19,9 @@ const currentQuestionIndex = ref(0);
 const currentRanks: Ref<Rank[]> = computed(() => {
   let ranksToReturn: Rank[] = [];
   if (ranksType.value === 'navy') {
-    ranksToReturn = ranksNavy.ranksNavy;
+    ranksToReturn = ranksNavy;
   } else {
-    ranksToReturn = ranks.ranks;
+    ranksToReturn = ranks;
   }
   return ranksToReturn;
 })
@@ -47,7 +47,7 @@ function showResult() {
 
 <template>
   <div class="content-wrapper">
-    <h2 class="content-heading">Nacionālo bruņoto spēku dienesta pakāpju tests</h2>
+    <RanksHeader />
     <Transition name="blur" mode="out-in">
       <div v-if="state === 'question'" class="content">
         <RanksTestQuestion 
@@ -61,7 +61,7 @@ function showResult() {
         /> 
       </div>
       <div v-else-if="state === 'result'" class="content">
-        <RanksTestResultTable 
+        <RanksTestResult 
           :ranks="currentRanks" 
           :ranksType="ranksType" 
         />
@@ -87,7 +87,7 @@ function showResult() {
 <style>
 .blur-enter-active,
 .blur-leave-active {
-  transition: all 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out, filter 0.3s ease-in-out;
 }
 .blur-enter-from,
 .blur-leave-to {

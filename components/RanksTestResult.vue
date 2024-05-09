@@ -1,38 +1,20 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import type { Rank } from "~/assets/types/rank";
+import type { RanksOptions } from "~/assets/types/ranksOptions";
 
-import ranks from '~/data/Ranks';
-import ranksNavy from '~/data/RanksNavy';
-
-import type { Rank } from '~/assets/types/rank';
-import type { RanksOptions } from '~/assets/types/ranksOptions';
-
-useHead ({
-  title: 'NBS dienesta pakāpes - Saraksts'
-})
-
-const ranksType: Ref<RanksOptions['type']> = ref('general');
 const ranksListStyle: Ref<RanksOptions['listStyle']> = ref('flex');
 const showHeaders: Ref<RanksOptions['showHeaders']> = ref(true);
 const showOptions: Ref<boolean> = ref(true);
 
-const currentRanks: Ref<Rank[]> = computed(() => {
-  let ranksToReturn = [];
-  if (ranksType.value === 'navy') {
-    ranksToReturn = ranksNavy;
-  } else {
-    ranksToReturn = ranks;
-  }
-  ranksToReturn.sort((a, b) => a.sort - b.sort);
-  return ranksToReturn;
-})
+const props = defineProps<{
+  ranks: Rank[],
+  ranksType: RanksOptions['type']
+}>();
 </script>
 
 <template>
-  <div class="content-wrapper">
-    <RanksHeader />
-    <div class="content">
-      <div class="options-wrapper">
+  <div class="ranks-test-result">
+    <div class="options-wrapper">
         <label 
           @click="showOptions = !showOptions" 
           @keyup.enter="showOptions = !showOptions" 
@@ -43,15 +25,6 @@ const currentRanks: Ref<Rank[]> = computed(() => {
         </label>
         <div class="options-container" :class="{ 'options-container-hidden': !showOptions }">
           <div>
-            <div class="options-container-item">
-              <div class="select-container">
-                <label for="ranks-type" class="select-container-label">Pakāpju veids</label>
-                <select v-model="ranksType" name="ranks-type" id="ranks-type">
-                  <option value="general">Vispārējās</option>
-                  <option value="navy">Jūras spēku</option>
-                </select>
-              </div>
-            </div>
             <div class="options-container-item">
               <div class="select-container">
                 <label for="ranks-list-style" class="select-container-label">Attēlošanas veids</label>
@@ -70,17 +43,13 @@ const currentRanks: Ref<Rank[]> = computed(() => {
           </div>
         </div>
       </div>
-      <RanksListFlex 
-        v-if="ranksListStyle === 'flex'" 
-        :ranks="currentRanks" 
-        :ranksType="ranksType" 
-        :showHeaders="showHeaders" 
-      />
-      <RanksListTable 
-        v-else 
-        :ranks="currentRanks" 
-        :ranksType="ranksType" 
-      />
-    </div>
+      <Transition name="blur" mode="out-in" tag="div" class="ranks-test-result-container">
+        <RanksTestResultFlex v-if="ranksListStyle === 'flex'" :ranks="props.ranks" :ranksType="props.ranksType" :showHeaders="showHeaders"/>
+        <RanksTestResultTable
+          v-else
+          :ranks="props.ranks" 
+          :ranksType="props.ranksType" 
+        />
+      </Transition>
   </div>
 </template>

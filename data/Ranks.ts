@@ -104,4 +104,4 @@ const ranks = <Rank[]> ([
   }
 ])
 
-export default {ranks}
+export default ranks

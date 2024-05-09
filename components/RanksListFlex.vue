@@ -18,7 +18,7 @@ defineProps<{ ranks: Rank[], ranksType: RanksOptions['type'], showHeaders: Ranks
     <RanksListFlexItem v-for="rank in [ranks[9], ranks[10]]" :key="rank.sort" :rank="rank" :rankType="ranksType" />
     <h3 :class="{ 'ranks-list-flex-header-hidden': !showHeaders }" class="ranks-list-flex-header" key="header-senior-petty-officers"><div>Vecākie instruktori</div></h3>
     <RanksListFlexItem v-for="rank in [ranks[11], ranks[12]]" :key="rank.sort" :rank="rank" :rankType="ranksType" />
-    <h3 :class="{ 'ranks-list-flex-header-hidden': !showHeaders }" class="ranks-list-flex-header" key="header-junior-petty-officers"><div>Jaunakie instruktori</div></h3>
+    <h3 :class="{ 'ranks-list-flex-header-hidden': !showHeaders }" class="ranks-list-flex-header" key="header-junior-petty-officers"><div>Jaunākie instruktori</div></h3>
     <RanksListFlexItem v-for="rank in [ranks[13], ranks[14]]" :key="rank.sort" :rank="rank" :rankType="ranksType" />
     <h3 :class="{ 'ranks-list-flex-header-hidden': !showHeaders }" class="ranks-list-flex-header" key="header-privates"><div>Kareivji</div></h3>
     <RanksListFlexItem v-for="rank in [ranks[15], ranks[16]]" :key="rank.sort" :rank="rank" :rankType="ranksType" />
@@ -134,15 +134,5 @@ defineProps<{ ranks: Rank[], ranksType: RanksOptions['type'], showHeaders: Ranks
   .ranks-list-flex-item {
     flex-direction: column;
   }
-}
-/* Transitions */
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.3s ease-in-out;
-}
-.list-enter-from,
-.list-leave-to {
-  opacity: 0;
-  transform: translateY(-2rem);
 }
 </style>
