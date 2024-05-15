@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   ssr: false,
   spaLoadingTemplate: 'spa-loading-template.html',
-  css: ['~/assets/css/normalize.css', '~/assets/css/main.css'],
+  css: ['~/assets/css/normalize.css', '~/assets/css/main.css', '~/assets/css/animation.css'],
   modules: ['@vite-pwa/nuxt'],
   app: {
     head: {
@@ -39,9 +39,14 @@ export default defineNuxtConfig({
           sizes: '512x512',
           type: 'image/png'
         }
-      ]
+      ],
+      lang: 'lv'
     },
-    registerWebManifestInRouteRules: true
+    registerWebManifestInRouteRules: true,
+    workbox: {
+      navigateFallback: '/'
+    },
+    includeAssets: ['fonts/*.woff2', 'images/*.png']
   },
   devtools: { enabled: true }
 })

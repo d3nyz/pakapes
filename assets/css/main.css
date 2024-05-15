@@ -266,21 +266,7 @@ input[type="text"]:invalid {
 .answer-input {
   margin: 0 auto 1rem;
 }
-/* Result block */
-.list-table {
-  width: 100%;
-  margin: 0 auto 1rem;
-}
-.list-table th {
-  border-bottom: .0625rem dashed var(--divider-color);
-}
-.list-table th, .list-table td {
-  padding: .25rem 1rem;
-  border-right: .0625rem dashed var(--divider-color);
-}
-.list-table th:last-child, .list-table td:last-child {
-  border-right: none;
-}
+/* Correcrt/wrong markers */
 .result-correct, .result-incorrect {
   font-weight: bold;
 }
@@ -289,96 +275,6 @@ input[type="text"]:invalid {
 }
 .result-incorrect {
   color: var(--color-red);
-}
-/* List options */
-.options-wrapper {
-  position: relative;
-  display: block;
-}
-@media screen and (min-width: 38em) {
-  .options-wrapper {
-    margin-top: -0.5rem;
-  }
-}
-.options-toggle {
-  position: absolute;
-  top: -0.55rem;
-  right: 1rem;
-  z-index: 2;
-  cursor: pointer;
-  font-size: 0.75rem;
-  font-weight: bold;
-  padding: 0 .5rem;
-  color: var(--primary-color);
-  background-color: var(--content-background-color);
-  border: .0625rem dashed var(--primary-color);
-  border-radius: .5rem;
-  will-change: color, border-color;
-  transition: color .3s ease-in-out, border-color .3s ease-in-out;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-.options-toggle:hover {
-  color: var(--primary-color-shade);
-  border-color: var(--primary-color-shade);
-}
-.options-toggle:focus-visible {
-  outline: .0625rem solid var(--color-gunmetal);
-  border-style: solid;
-  border-color: var(--color-gunmetal);
-  color: var(--primary-color-shade);
-}
-.options-toggle span {
-  display: inline-block;
-  will-change: transform;
-  transition: transform .3s ease-in-out;
-  margin-right: .25rem;
-}
-.options-toggle.options-toggle-closed span {
-  transform: rotate(-90deg);
-}
-.options-container {
-  position: relative;
-  display: grid;
-  margin-bottom: 1rem;
-  padding: 1rem;
-  background-color: var(--content-background-color);
-  border: .0625rem dashed var(--divider-color);
-  border-radius: 1rem;
-  box-shadow: 0 0 .25rem .125rem var(--content-background-color);
-  z-index: 1;
-  grid-template-rows: 1fr;
-  will-change: grid-template-rows, padding, border-color;
-  transition: grid-template-rows .3s ease-in-out, padding .3s ease-in-out, border-color .3s ease-in-out;
-}
-@media screen and (min-width: 38em) {
-  .options-wrapper {
-    margin-bottom: 1.4rem;
-  }
-}
-.options-container > div {
-  overflow: hidden;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-.options-container.options-container-hidden {
-  grid-template-rows: 0fr;
-  padding: 0;
-  border-color: var(--color-light-gray);
-}
-.options-container > div .options-container-item > * {
-  margin-top: .5rem;
-}
-/* Test options */
-.test-options {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 0 1rem;
 }
 /* Custom checkbox */
 .checkbox {
@@ -546,16 +442,4 @@ select:focus {
 }
 .footer a {
   text-underline-offset: 0.125rem;
-}
-/* Animation */
-@keyframes shake {
-  25% {
-      transform: translate(.25rem);
-  }
-  50% {
-      transform: translate(-0.25rem);
-  }
-  75% {
-      transform: translate(.25rem);
-  }
 }

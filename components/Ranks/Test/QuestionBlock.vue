@@ -1,50 +1,58 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import type { Rank } from "~/assets/types/rank";
-import type { RanksOptions } from '~/assets/types/ranksOptions';
+import type { Rank, RanksOptions } from "~/assets/types/rank";
 
-const props = defineProps<{ 
-  rank: Rank, 
-  ranksType: RanksOptions['type'],
-  unansweredRanksCount: number,
-}>();
+const props = defineProps({ 
+  rank: {
+    type: Object as PropType<Rank>,
+    required: true
+  }, 
+  ranksType: {
+    type: String as PropType<RanksOptions['type']>,
+    default: 'general'
+  },
+  unansweredRanksCount: {
+    type: Number,
+    required: true
+  }
+});
+
 const emit = defineEmits([
-  'incraseQuestionIndex', 
+  'increaseQuestionIndex', 
   'updateAnswerInput',
   'showResult', 
   'updateUnansweredRanksCount'
 ]);
 
-const imagePath = computed(() => {
+const imagePath = computed<string>(() => {
   if (props.ranksType === 'navy') {
-    return '/images/navy/ribbon-'
+    return '/images/navy/ribbon-';
   } else {
-    return '/images/ribbon-'
+    return '/images/ribbon-';
   }
-})
+});
 
-function updateAnswerInput() {
+function updateAnswerInput (): void {
   emit('updateAnswerInput', props.rank.input);
   emit('updateUnansweredRanksCount');
   removeErrorClass();
-}
-function removeErrorClass() {
-  const answerInput = document.getElementById('answer-input');
+};
+function removeErrorClass(): void {
+  const answerInput: HTMLElement | null = document.getElementById('answer-input');
   answerInput?.classList.remove('error');
-}
-function showNext() {
+};
+function showNext(): void {
   if (props.rank.input !== '') {
     if (props.unansweredRanksCount > 0) {
-      emit('incraseQuestionIndex');
+      emit('increaseQuestionIndex');
     } else {
       emit('showResult');
     }
   } else {
-    const answerInput = document.getElementById('answer-input');
+    const answerInput: HTMLElement | null = document.getElementById('answer-input');
     answerInput?.classList.add('error');
     answerInput?.focus();
   }
-}
+};
 </script>
 
 <template>

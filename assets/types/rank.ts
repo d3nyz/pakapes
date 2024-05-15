@@ -7,12 +7,14 @@ export interface Rank {
 };
 
 type RanksType = 'general' | 'navy';
-type RanksListStyle = 'flex' | 'table';
+type RanksDisplayStyle = 'flex' | 'table';
 export type RanksOptions = {
   type: RanksType;
-  listStyle: RanksListStyle;
+  displayStyle: RanksDisplayStyle;
   showHeaders?: boolean;
 };
+
+export type RanksPage = 'test' | 'list';
 
 export interface RankCategory {
   sort: number;
