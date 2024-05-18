@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { RanksOptions, RanksPage } from "~/assets/types/rank";
+import IconSort from "~/assets/icons/sort.vue";
 defineProps({
   showOptions: {
     type: Boolean,
@@ -84,7 +85,9 @@ defineEmits([
           </label>
         </div>
         <div class="options-container-item">
-          <button class="options-button" @click="$emit('toggleReverse')">&#8693;</button>
+          <button class="options-button" @click="$emit('toggleReverse')">
+            <IconSort width="1.25rem" height="1.25rem" />
+          </button>
         </div>
       </div>
     </div>
