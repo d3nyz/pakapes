@@ -176,6 +176,9 @@ defineEmits([
 }
 /* Options button */
 .options-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 1.125rem;
   font-weight: bold;
   line-height: 1;
