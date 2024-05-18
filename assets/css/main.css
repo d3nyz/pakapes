@@ -93,6 +93,10 @@ input[type="text"].error {
 input[type="text"]:invalid {
   animation: shake .3s ease-in-out;
 }
+input[type="text"]::placeholder {
+  color: var(--color-light-gray);
+  font-style: italic;
+}
 .no-margin {
   margin: 0 !important;
 }
@@ -181,6 +185,8 @@ input[type="text"]:invalid {
 /* Content */
 .content-wrapper {
   max-width: 56rem;
+  width: auto;
+  width: calc(min(100%, 44rem) - 2rem);
   margin: 2rem 1rem;
   display: flex;
   flex-direction: column;
@@ -194,6 +200,8 @@ input[type="text"]:invalid {
 @media screen and (max-width: 18em) {
   .content-wrapper {
     margin: 1rem .5rem;
+    width: auto;
+    width: calc(min(100%, 44rem) - 1rem);
   }
 }
 .content-heading {

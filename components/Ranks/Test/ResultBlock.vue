@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { Rank, RanksOptions, RanksPage } from "~/assets/types/rank";
 
-const ranksDisplayStyle: Ref<RanksOptions['displayStyle']> = ref('flex');
+const ranksDisplayStyle: Ref<RanksOptions['displayStyle']> = ref('flex'); // TODO set to table by default if screen width > 45rem
 const showHeaders: Ref<RanksOptions['showHeaders']> = ref(false);
 const showOptions: Ref<boolean> = ref(false);
+const reverse: Ref<boolean> = ref(false);
 const ranksPage: RanksPage = 'test';
 
 const props = defineProps<{
@@ -24,13 +25,15 @@ defineEmits(['setState']);
       @toggleShowOptions="showOptions = !showOptions"
       @updateDisplayStyle="ranksDisplayStyle = $event"
       @toggleShowHeaders="showHeaders = !showHeaders"
+      @toggleReverse="reverse = !reverse"
     />
-    <Transition name="blur" mode="out-in" tag="div" class="ranks-test-result-container">
+    <Transition name="fade-top" mode="out-in" tag="div" class="ranks-test-result-container">
       <RanksDisplayStyleFlex 
         v-if="ranksDisplayStyle === 'flex'" 
         :ranks="props.ranks" 
         :ranksType="props.ranksType" 
         :showHeaders="showHeaders"
+        :reverse="reverse"
         :ranksPage="ranksPage"
       />
       <RanksDisplayStyleTable
@@ -38,6 +41,7 @@ defineEmits(['setState']);
         :ranks="props.ranks" 
         :ranksType="props.ranksType"
         :showHeaders="showHeaders"
+        :reverse="reverse"
         :ranksPage="ranksPage"
       />
     </Transition>

@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { Rank, RanksOptions, RanksPage, RankCategoryWithRanks } from "~/assets/types/rank";
 
-import categorizeRanks from "~/utils/categorizeRanks";
-
 const props = defineProps({
   ranks: {
     type: Array as PropType<Rank[]>,
@@ -19,19 +17,19 @@ const props = defineProps({
   ranksPage: {
     type: String as PropType<RanksPage>,
     default: 'list'
+  },
+  reverse: {
+    type: Boolean,
+    default: false
   }
 });
 
 const imagePath = computed<string>(() => {
-  if (props.ranksType === 'navy') {
-    return '/images/navy/ribbon-'
-  } else {
-    return '/images/ribbon-'
-  }
+  return getImagePath(props.ranksType);
 });
 
 const rankCategoriesWithRanks = computed<RankCategoryWithRanks[]>(() => {
-  return categorizeRanks(props.ranks as Rank[]);
+  return categorizeRanks(props.ranks as Rank[], props.reverse);
 });
 
 const answerIsCorrect = (input: string | undefined, name: string): boolean => {
@@ -40,17 +38,17 @@ const answerIsCorrect = (input: string | undefined, name: string): boolean => {
 </script>
 
 <template>
-  <div 
-    class="ranks-display-style-flex" 
+  <TransitionGroup tag="div" name="table-fade" 
+    class="ranks-display-style-flex table-fade" 
     :class="{ 'ranks-test-result-flex': props.ranksPage === 'test',
               'ranks-list-flex': props.ranksPage === 'list' }"
     >
-    <template
+    <div class="ranks-display-style-flex-group-wrapper"
       v-for="category in rankCategoriesWithRanks" 
       :key="category.key" 
       >
 
-      <h3 
+      <h3
         class="ranks-display-style-flex-category-header" 
         :class="{'category-header-hidden' : !props.showHeaders}">
         <div>{{ category.name }}</div>
@@ -91,13 +89,19 @@ const answerIsCorrect = (input: string | undefined, name: string): boolean => {
         </div>
       </div>
 
-    </template>
-  </div>
+    </div>
+  </TransitionGroup>
 </template>
 
 <style>
 .ranks-test-result-flex {
   margin: 0 auto 1rem;
+}
+.ranks-display-style-flex-group-wrapper {
+  border-bottom: .0625rem dashed var(--divider-color);
+}
+.ranks-display-style-flex-group-wrapper:last-child {
+  border-bottom: 0;
 }
 /* Ranks display style flex header */
 .ranks-display-style-flex-category-header {
@@ -128,7 +132,7 @@ const answerIsCorrect = (input: string | undefined, name: string): boolean => {
   padding: 0;
   border-bottom: 0;
 }
-.ranks-display-style-flex .ranks-display-style-flex-category-header:first-child {
+.ranks-display-style-flex .ranks-display-style-flex-group-wrapper:first-child .ranks-display-style-flex-category-header {
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
 }

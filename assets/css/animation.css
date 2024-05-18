@@ -1,4 +1,6 @@
-/* Animations */
+/********** 
+Animations
+***********/
 /* Shake */
 @keyframes shake {
   25% {
@@ -11,7 +13,9 @@
       transform: translate(.25rem);
   }
 }
-/* Transitions */
+/**********
+Transitions 
+***********/
 /* Blur */
 .blur-enter-active,
 .blur-leave-active {
@@ -21,4 +25,49 @@
 .blur-leave-to {
   opacity: 0;
   filter: blur(1rem);
+}
+/* Scale */
+.scale-enter-active,
+.scale-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.scale-enter-from,
+.scale-leave-to {
+  opacity: 0;
+  transform: scale(0);
+}
+/* Fade Top */
+.fade-top-enter-active,
+.fade-top-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.fade-top-enter-from,
+.fade-top-leave-to {
+  opacity: 0;
+  transform: translateY(-8rem);
+}
+/* FadeTop group transition for table */
+.table-fade {
+  position: relative;
+}
+.table-fade tr, .table-fade > div, .table-fade > h3 {
+  will-change: transform, opacity;
+}
+.table-fade-move,
+.table-fade-enter-active,
+.table-fade-leave-active {
+  transition: transform .3s linear, opacity .3s linear;
+}
+.table-fade-enter-from,
+.table-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-3rem);
+}
+.table-fade-leave-active {
+  position: absolute;
+}
+/* There is a bug without this: row shrinking to one cell size. I think it's colspan related */
+.ranks-display-style-table-category-header.table-fade-leave-active {
+  display: grid;
+  width: calc(100% - 0.25rem);
 }

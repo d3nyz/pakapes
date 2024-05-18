@@ -25,7 +25,8 @@ defineProps({
 
 defineEmits([ 
   'toggleShowOptions', 
-  'toggleShowHeaders', 
+  'toggleShowHeaders',
+  'toggleReverse', 
   'updateRanksType', 
   'updateDisplayStyle' 
 ]);
@@ -81,6 +82,9 @@ defineEmits([
               @keyup.enter="$emit('toggleShowHeaders')"/>
             <span class="checkmark"></span>
           </label>
+        </div>
+        <div class="options-container-item">
+          <button class="options-button" @click="$emit('toggleReverse')">&#8693;</button>
         </div>
       </div>
     </div>
@@ -169,5 +173,29 @@ defineEmits([
 }
 .options-container > div .options-container-item > * {
   margin-top: .5rem;
+}
+/* Options button */
+.options-button {
+  font-size: 1.125rem;
+  font-weight: bold;
+  line-height: 1;
+  text-align: center;
+  color: var(--content-text-color);
+  min-width: 2.7rem;
+  min-height: 2.7rem;
+  padding: .5rem;
+  background-color: var(--content-background-color);
+  border: .25rem solid var(--color-light-gray);
+  border-radius: 50%;
+  cursor: pointer;
+  will-change: border-color;
+  transition: border-color .3s ease-in-out;
+}
+.options-button:hover {
+  border-color: var(--color-silver);
+}
+.options-button:focus-visible {
+  outline: none;
+  border-color: var(--color-gray-1);
 }
 </style>

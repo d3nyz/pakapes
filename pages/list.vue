@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import ranks from '~/data/Ranks';
-import ranksNavy from '~/data/RanksNavy';
-
 import type { Rank, RanksOptions, RanksPage } from '~/assets/types/rank';
 
 useHead ({
@@ -12,18 +9,13 @@ const ranksType: Ref<RanksOptions['type']> = ref('general');
 const ranksDisplayStyle: Ref<RanksOptions['displayStyle']> = ref('flex');
 const showHeaders: Ref<RanksOptions['showHeaders']> = ref(true);
 const showOptions: Ref<boolean> = ref(true);
+const reverse: Ref<boolean> = ref(false);
 const ranksPage: RanksPage = 'list';
 
 const currentRanks = computed<Rank[]>(() => {
-  let ranksToReturn = [];
-  if (ranksType.value === 'navy') {
-    ranksToReturn = ranksNavy;
-  } else {
-    ranksToReturn = ranks;
-  }
-  ranksToReturn.sort((a, b) => a.sort - b.sort);
-  return ranksToReturn;
-})
+  return getRanksByType(ranksType.value);
+});
+
 </script>
 
 <template>
@@ -40,21 +32,28 @@ const currentRanks = computed<Rank[]>(() => {
         @updateRanksType="ranksType = $event"
         @updateDisplayStyle="ranksDisplayStyle = $event"
         @toggleShowHeaders="showHeaders = !showHeaders"
+        @toggleReverse="reverse = !reverse"
       />
-      <RanksDisplayStyleFlex 
-        v-if="ranksDisplayStyle === 'flex'" 
-        :ranks="currentRanks" 
-        :ranksType="ranksType" 
-        :showHeaders="showHeaders"
-        :ranksPage="ranksPage"
-      />
-      <RanksDisplayStyleTable 
-        v-else 
-        :ranks="currentRanks" 
-        :ranksType="ranksType"
-        :showHeaders="showHeaders"
-        :ranksPage="ranksPage"
-      />
+      <Transition name="fade-top" mode="out-in">
+        <RanksDisplayStyleFlex 
+          v-if="ranksDisplayStyle === 'flex'"
+          :key="ranksType+'-flex'" 
+          :ranks="currentRanks" 
+          :ranksType="ranksType" 
+          :showHeaders="showHeaders"
+          :reverse="reverse"
+          :ranksPage="ranksPage"
+        />
+        <RanksDisplayStyleTable 
+          v-else 
+          :key="ranksType+'-table'"
+          :ranks="currentRanks" 
+          :ranksType="ranksType"
+          :showHeaders="showHeaders"
+          :reverse="reverse"
+          :ranksPage="ranksPage"
+        />
+      </Transition>
     </div>
   </div>
 </template>

@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { Rank, RanksOptions, RanksPage, RankCategoryWithRanks } from "~/assets/types/rank";
 
-import categorizeRanks from "~/utils/categorizeRanks";
-
 const props = defineProps({
   ranks: {
     type: Array as PropType<Rank[]>,
@@ -19,19 +17,19 @@ const props = defineProps({
   ranksPage: {
     type: String as PropType<RanksPage>,
     default: 'list'
+  },
+  reverse: {
+    type: Boolean,
+    default: false
   }
 });
 
 const imagePath = computed<string>(() => {
-  if (props.ranksType === 'navy') {
-    return '/images/navy/ribbon-'
-  } else {
-    return '/images/ribbon-'
-  }
+  return getImagePath(props.ranksType);
 });
 
 const rankCategoriesWithRanks = computed<RankCategoryWithRanks[]>(() => {
-  return categorizeRanks(props.ranks as Rank[]);
+  return categorizeRanks(props.ranks as Rank[], props.reverse);
 });
 
 const answerIsCorrect = (input: string | undefined, name: string): boolean => {
@@ -41,13 +39,13 @@ const answerIsCorrect = (input: string | undefined, name: string): boolean => {
 
 <template>
   <div class="ranks-display-style-table-wrapper">
-    <table 
-      class="ranks-display-style-table"
+    <TransitionGroup name="table-fade" tag="table"
+      class="ranks-display-style-table table-fade"
       :class="{
         'ranks-test-result-table': ranksPage === 'test', 
         'ranks-list-table': ranksPage === 'list'}"
         >
-      <tr>
+      <tr key="table-header">
         <th>Uzšuve</th>
         <th>Pakāpe</th>
         <th v-if="ranksPage === 'test'">Atbilde</th>
@@ -58,7 +56,7 @@ const answerIsCorrect = (input: string | undefined, name: string): boolean => {
       </tr>
 
       <template v-for="category in rankCategoriesWithRanks" :key="category.key">
-        <tr
+        <tr v-if="props.showHeaders"
           class="ranks-display-style-table-category-header"
           :class="{ 'category-header-hidden' : !props.showHeaders }">
           <td :colspan="ranksPage === 'test' ? 3 : 4">{{ category.name }}</td>
@@ -85,13 +83,14 @@ const answerIsCorrect = (input: string | undefined, name: string): boolean => {
           </template>
         </tr>
       </template>
-    </table>
+    </TransitionGroup>
   </div>
 </template>
 
 <style>
 .ranks-display-style-table-wrapper {
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 .ranks-display-style-table {
   width: 100%;

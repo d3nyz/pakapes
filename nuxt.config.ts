@@ -44,7 +44,8 @@ export default defineNuxtConfig({
     },
     registerWebManifestInRouteRules: true,
     workbox: {
-      navigateFallback: '/'
+      navigateFallback: '/',
+      globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
     },
     includeAssets: ['fonts/*.woff2', 'images/*.png']
   },

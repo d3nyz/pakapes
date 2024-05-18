@@ -1,15 +1,9 @@
 <script setup lang="ts">
 import type { Rank, RanksOptions } from '~/assets/types/rank';
 
-import ranks from '~/data/Ranks'
-import ranksNavy from '~/data/RanksNavy';
 const ranksType: Ref<RanksOptions['type']> = ref('general');
 const currentRanks = computed<Rank[]>(() => {
-  if (ranksType.value === 'navy') {
-    return ranksNavy;
-  } else {
-    return ranks;
-  }
+  return getRanksByType(ranksType.value);
 });
 
 type TestState = 'intro' | 'question' | 'result';
@@ -38,7 +32,7 @@ function showResult() {
 
 <template>
   <div class="ranks-test content">
-    <Transition name="blur" mode="out-in">
+    <Transition name="scale" mode="out-in">
       <RanksTestQuestionBlock
         v-if="state === 'question'"
         :rank="currentRanks[currentQuestionIndex]" 

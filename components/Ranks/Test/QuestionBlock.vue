@@ -24,11 +24,7 @@ const emit = defineEmits([
 ]);
 
 const imagePath = computed<string>(() => {
-  if (props.ranksType === 'navy') {
-    return '/images/navy/ribbon-';
-  } else {
-    return '/images/ribbon-';
-  }
+  return getImagePath(props.ranksType);
 });
 
 function updateAnswerInput (): void {
@@ -58,11 +54,14 @@ function showNext(): void {
 <template>
   <div v-if="rank" class="question"> 
     <p class="question-text">Kas šī ir par pakāpi?</p>
-    <p class="question-text">
-      <img 
-        :src="imagePath + rank.code.toLowerCase() + '.png'" 
-        :alt="rank.code + ' uzšuves attēls'"
-      />
+    <p class="question-text question-image-container">
+      <Transition name="scale" mode="out-in">
+        <img 
+          :src="imagePath + rank.code.toLowerCase() + '.png'" 
+          :alt="rank.code + ' uzšuves attēls'"
+          :key="rank.sort"
+        />
+      </Transition>
     </p>
     <input 
       v-model.trim="rank.input"   
@@ -73,6 +72,7 @@ function showNext(): void {
       minlength="1"
       maxlength="25"
       pattern="[a-zA-ZāĀčČēĒģĢīĪķĶļĻņŅšŠūŪžŽ ]*"
+      placeholder="Ievadiet pakāpi..."
       @keyup.enter="showNext()"
       @input="updateAnswerInput()"
     />
@@ -94,3 +94,9 @@ function showNext(): void {
     />
   </div>
 </template>
+
+<style>
+.question-image-container {
+  min-height: 2.1875rem;
+}
+</style>
