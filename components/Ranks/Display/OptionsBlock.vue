@@ -204,4 +204,7 @@ defineEmits([
   outline: none;
   border-color: var(--color-gray-1);
 }
+.options-button:active {
+  border-color: var(--primary-color);
+}
 </style>

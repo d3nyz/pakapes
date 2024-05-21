@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   ssr: false,
   spaLoadingTemplate: 'spa-loading-template.html',
   css: ['~/assets/css/normalize.css', '~/assets/css/main.css', '~/assets/css/animation.css'],
-  modules: ['@vite-pwa/nuxt'],
+  modules: ['@vite-pwa/nuxt', '@nuxtjs/sitemap', 'nuxt-simple-robots'],
   app: {
     head: {
       title: 'NBS dienesta pakāpes',
@@ -21,8 +21,22 @@ export default defineNuxtConfig({
       ],
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
+      htmlAttrs: {
+        lang: 'lv'
+      }
     },
     pageTransition: { name: 'page', mode: 'out-in' }
+  },
+  site: {
+    name: 'NBS dienesta pakāpes',
+    description: 'Aplikācijas mērķis ir palīdzēt nacionālo bruņoto spēku kandidātam iemācīties atšķirt Latvijas armijas dienesta pakāpes.',
+    url: 'https://pakapes.netlify.app',
+    defaultLocale: 'lv',
+    indexable: true
+  },
+  sitemap: {
+    include: [ '/', '/list' ],
+    enabled: true
   },
   nitro: {
     prerender: {
@@ -52,7 +66,9 @@ export default defineNuxtConfig({
           type: 'image/png'
         }
       ],
-      lang: 'lv'
+      lang: 'lv',
+      display_override: ['minimal-ui'],
+      display: 'standalone'
     },
     registerWebManifestInRouteRules: true,
     workbox: {
