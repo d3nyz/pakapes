@@ -35,12 +35,13 @@ export default defineNuxtConfig({
     indexable: true
   },
   sitemap: {
-    include: [ '/', '/list' ],
-    enabled: true
+    include: [ '/**', '/', '/list' ],
+    enabled: true,
+    urls: [ '/', '/list' ]
   },
   nitro: {
     prerender: {
-      routes: ['/', '/list']
+      routes: ['/', '/list', '/sitemap.xml', '/robots.txt']
     }
   },
   pwa: {
