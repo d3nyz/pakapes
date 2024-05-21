@@ -440,6 +440,7 @@ select:focus {
 }
 /* Footer */
 .footer {
+  position: relative;
   color: var(--content-text-color);
   border-top: .0625rem dashed var(--divider-color);
   font-size: 1rem;

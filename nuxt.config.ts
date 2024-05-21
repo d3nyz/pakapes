@@ -1,4 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import process from 'node:process'
+const sw = process.env.SW === 'true'
+
 export default defineNuxtConfig({
   ssr: false,
   spaLoadingTemplate: 'spa-loading-template.html',
@@ -21,10 +24,19 @@ export default defineNuxtConfig({
     },
     pageTransition: { name: 'page', mode: 'out-in' }
   },
+  nitro: {
+    prerender: {
+      routes: ['/', '/list']
+    }
+  },
   pwa: {
+    strategies: sw ? 'injectManifest' : 'generateSW',
+    srcDir: sw ? 'service-worker' : undefined,
+    filename: sw ? 'sw.ts' : undefined,
+    registerType: 'autoUpdate',
     manifest: {
       name: 'NBS dienesta pakāpes',
-      short_name: 'NBS dienesta pakāpes',
+      short_name: 'NBS pakāpes',
       description: 'Mērķis ir palīdzēt nacionālo bruņoto spēku kandidātam iemācīties atšķirt Latvijas armijas dienesta pakāpes.',
       theme_color: '#f5f5f5',
       background_color: '#f5f5f5',
@@ -47,7 +59,13 @@ export default defineNuxtConfig({
       navigateFallback: '/',
       globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
     },
-    includeAssets: ['fonts/*.woff2', 'images/*.png']
+    injectManifest: {
+      globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+    },
+    includeAssets: ['fonts/*.woff2', 'images/*.png'],
+    client: {
+      installPrompt: true
+    }
   },
   devtools: { enabled: true }
 })

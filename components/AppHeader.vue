@@ -32,7 +32,7 @@ const headerPlaceholderHeight: Ref<string> = computed(() => {
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
   // There is an anomaly with the headerHeight on screen width 427px-448px it is calculated 2x bigger than the real header height without this construction.
-  nextTick().then(() => setTimeout(() => {headerHeight.value = mainHeader.value?.offsetHeight || 45}, 15));
+  nextTick().then(() => setTimeout(() => {headerHeight.value = mainHeader.value?.offsetHeight || 45}, 50));
 });
 
 onBeforeUnmount(() => {
