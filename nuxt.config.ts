@@ -2,6 +2,11 @@
 import process from 'node:process'
 const sw = process.env.SW === 'true'
 
+const siteURL = process.env.SITE_URL || 'https://pakapes.netlify.app'
+
+import pkg from './package.json'
+const clientVersion = pkg.version
+
 export default defineNuxtConfig({
   ssr: false,
   spaLoadingTemplate: 'spa-loading-template.html',
@@ -30,7 +35,7 @@ export default defineNuxtConfig({
   site: {
     name: 'NBS dienesta pakāpes',
     description: 'Aplikācijas mērķis ir palīdzēt nacionālo bruņoto spēku kandidātam iemācīties atšķirt Latvijas armijas dienesta pakāpes.',
-    url: 'https://pakapes.netlify.app',
+    url: siteURL,
     defaultLocale: 'lv',
     indexable: true
   },
@@ -74,14 +79,26 @@ export default defineNuxtConfig({
     registerWebManifestInRouteRules: true,
     workbox: {
       navigateFallback: '/',
-      globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+      globPatterns: ['**/*.{js,css,html,json,ico,png,svg,woff2}'],
     },
     injectManifest: {
-      globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+      globPatterns: ['**/*.{js,css,html,json,ico,png,svg,woff2}'],
     },
     includeAssets: ['fonts/*.woff2', 'images/*.png'],
     client: {
       installPrompt: true
+    },
+    devOptions: {
+      enabled: true,
+      suppressWarnings: true,
+      navigateFallback: '/',
+      navigateFallbackAllowlist: [/^\/$/],
+      type: 'module'
+    }
+  },
+  runtimeConfig: {
+    public: {
+      version: clientVersion
     }
   },
   devtools: { enabled: true }

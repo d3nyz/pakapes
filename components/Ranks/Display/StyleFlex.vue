@@ -255,6 +255,7 @@ const answerIsCorrect = (input: string | undefined, name: string): boolean => {
   .ranks-test-result-flex .ranks-display-style-flex-item .ranks-display-style-flex-item-name {
     order: 0;
     flex-basis: auto;
+    justify-content: start;
   }
 }
 .ranks-display-style-flex-item-context {

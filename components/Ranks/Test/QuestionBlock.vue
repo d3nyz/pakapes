@@ -32,19 +32,21 @@ function updateAnswerInput (): void {
   emit('updateUnansweredRanksCount');
   removeErrorClass();
 };
+
 function removeErrorClass(): void {
   const answerInput: HTMLElement | null = document.getElementById('answer-input');
   answerInput?.classList.remove('error');
 };
 function showNext(): void {
+  const answerInput: HTMLElement | null = document.getElementById('answer-input');
   if (props.rank.input !== '') {
     if (props.unansweredRanksCount > 0) {
+      answerInput?.focus();
       emit('increaseQuestionIndex');
     } else {
       emit('showResult');
     }
   } else {
-    const answerInput: HTMLElement | null = document.getElementById('answer-input');
     answerInput?.classList.add('error');
     answerInput?.focus();
   }
@@ -69,6 +71,7 @@ function showNext(): void {
       class="answer-input" 
       type="text" 
       focusable
+      autofocus
       minlength="1"
       maxlength="25"
       pattern="[a-zA-ZāĀčČēĒģĢīĪķĶļĻņŅšŠūŪžŽ ]*"

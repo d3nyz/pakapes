@@ -6,6 +6,7 @@
       <NuxtPage />
     </div>
     <AppFooter v-once />
+    <PwaPrompt />
   </div>
 </template>
 
