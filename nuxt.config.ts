@@ -73,7 +73,6 @@ export default defineNuxtConfig({
         }
       ],
       lang: 'lv',
-      display_override: ['minimal-ui'],
       display: 'standalone'
     },
     registerWebManifestInRouteRules: true,
