@@ -33,7 +33,7 @@ import iconClose from '~/assets/icons/close.vue';
         </div>
       </div>
       <div
-        v-else-if="$pwa?.offlineReady || $pwa?.needRefresh"
+        v-else-if="!$pwa?.showInstallPrompt && ($pwa?.offlineReady || $pwa?.needRefresh)"
         class="pwa-prompt"
         >
         <div class="pwa-prompt-header">
