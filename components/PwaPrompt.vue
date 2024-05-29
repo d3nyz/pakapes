@@ -33,7 +33,7 @@ import iconClose from '~/assets/icons/close.vue';
         </div>
       </div>
       <div
-        v-else-if="!$pwa?.showInstallPrompt && ($pwa?.offlineReady || $pwa?.needRefresh)"
+        v-else-if="$pwa?.offlineReady || $pwa?.needRefresh"
         class="pwa-prompt"
         >
         <div class="pwa-prompt-header">
@@ -64,10 +64,6 @@ import iconClose from '~/assets/icons/close.vue';
         </div>
       </div>
     </Transition>
-    <span>{{ $pwa?.offlineReady ? 'offlineReady' : '!offlineReady' }}</span>
-    <span>{{ $pwa?.needRefresh ? 'needRefrsh' : '!needRefresh' }}</span>
-    <span>{{ $pwa?.showInstallPrompt ? 'showInstallPrompt' : '!showInstallPrompt' }}</span>
-    <span>{{ $pwa?.isPWAInstalled ? 'isPWAInstalled' : '!isPWAInstalled' }}</span>
   </ClientOnly>
 </template>
 

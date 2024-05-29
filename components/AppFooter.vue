@@ -1,14 +1,36 @@
 <script setup lang="ts">
 import iconInstall from '~/assets/icons/install.vue';
 const runtimeConfig = useRuntimeConfig();
+
+/* TODO? Move this browser install prompt code to somewhere else */
+// Define type of the BeforeInstallPromptEvent.
+type UserChoice = Promise<{
+  outcome: 'accepted' | 'dismissed';
+  platform: string;
+}>;
+
+interface BeforeInstallPromptEvent extends Event {
+  readonly platforms: string[];
+  readonly userChoice: UserChoice;
+  prompt(): Promise<UserChoice>;
+}
+// Initialize deferredPrompt for use later to show browser install prompt.
+let deferredPrompt: BeforeInstallPromptEvent | undefined = undefined;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Stash the event so it can be triggered later.
+  deferredPrompt = e as BeforeInstallPromptEvent;
+});
+/* End of prompt stuff */
 </script>
+
 <template>
   <footer class="footer">
     <ClientOnly>
       <button
-        v-if="$pwa && !$pwa?.isPWAInstalled"
+        v-if="!$pwa?.isPWAInstalled"
         class="footer-pwa-button"
-        @click="$pwa.install()"
+        @click="deferredPrompt?.prompt();"
         >
         <iconInstall />
       </button>

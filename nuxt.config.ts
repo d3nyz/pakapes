@@ -78,10 +78,10 @@ export default defineNuxtConfig({
     registerWebManifestInRouteRules: true,
     workbox: {
       navigateFallback: '/',
-      globPatterns: ['**/*.{js,css,html,json,ico,png,svg,woff2}'],
+      globPatterns: ['**/*.{js,css,html,json,ico,png,svg,woff2,woff,ttf}'],
     },
     injectManifest: {
-      globPatterns: ['**/*.{js,css,html,json,ico,png,svg,woff2}'],
+      globPatterns: ['**/*.{js,css,html,json,ico,png,svg,woff2,woff,ttf}'],
     },
     includeAssets: ['fonts/*.woff2', 'images/*.png'],
     client: {
